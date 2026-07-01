@@ -12,7 +12,8 @@ import * as THREE from 'three'
 const MODEL = '/models/rose.glb'
 
 // 🎛️ AJUSTES RÁPIDOS DE GOSTO
-const TARGET_HEIGHT = 3.6 // tamanho da rosa na cena (aumenta/diminui)
+const TARGET_HEIGHT = 5.0 // tamanho da rosa na cena (aumenta/diminui)
+const POSITION_Y = -1.4 // altura na tela (mais negativo = mais pra baixo)
 const EXTRA_ROTATION = [0, 0, 0] // se vier deitada/torta: [x, y, z] em radianos
 const SPIN_SPEED = 0.18 // velocidade do giro
 
@@ -70,7 +71,7 @@ function Rose() {
 export default function RoseScene({ mode }) {
   const gold = mode === 'night' ? '#e8d4a0' : '#ffd9a0'
   return (
-    <group position={[0, -0.2, 0]}>
+    <group position={[0, POSITION_Y, 0]}>
       <ambientLight intensity={0.6} />
       <pointLight position={[3, 2, 4]} intensity={45} color="#ffe6d0" distance={22} />
       {/* rim light dourado por trás → contorno brilhante */}

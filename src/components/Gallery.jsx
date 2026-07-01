@@ -3,58 +3,45 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { gallery } from '../config'
 import { SectionTitle } from './Timeline'
 
-// span do mosaico -> classes de grid
-const spanClass = {
-  big: 'sm:col-span-2 sm:row-span-2',
-  wide: 'sm:col-span-2',
-  tall: 'sm:row-span-2',
-}
+// filtro coeso "álbum" aplicado em todas as fotos
+const FILTER = 'saturate(0.85) sepia(0.12) contrast(1.03)'
 
-// Foto individual com tilt 3D no hover + legenda que surge.
-function Photo({ item, index, onOpen }) {
-  const ref = useRef()
-  const [style, setStyle] = useState({})
+// giro determinístico -4..+4 graus (scrapbook)
+const rot = (i) => -4 + ((i * 37) % 9)
 
-  const onMove = (e) => {
-    const el = ref.current
-    if (!el) return
-    const r = el.getBoundingClientRect()
-    const px = (e.clientX - r.left) / r.width - 0.5
-    const py = (e.clientY - r.top) / r.height - 0.5
-    setStyle({ transform: `perspective(700px) rotateY(${px * 10}deg) rotateX(${-py * 10}deg) scale(1.03)` })
-  }
-  const reset = () => setStyle({ transform: 'perspective(700px) rotateY(0) rotateX(0) scale(1)' })
-
+// ------- POLAROIDS (scrapbook) -------
+function Polaroid({ item, index, onOpen }) {
   return (
     <motion.button
       layoutId={`photo-${index}`}
       onClick={() => onOpen(index)}
-      onMouseMove={onMove}
-      onMouseLeave={reset}
-      ref={ref}
-      style={style}
-      className={`group relative overflow-hidden rounded-xl transition-transform duration-200 ease-out ${spanClass[item.span] || ''}`}
+      initial={{ rotate: rot(index) }}
+      whileInView={{ rotate: rot(index) }}
+      whileHover={{ rotate: 0, scale: 1.06, zIndex: 10 }}
+      transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+      className="group relative w-[46%] max-w-[260px] rounded-sm bg-[#f7f1e3] p-3 pb-10 shadow-xl sm:w-[240px]"
+      style={{ transformOrigin: 'center', boxShadow: '0 18px 40px -14px rgba(0,0,0,0.6)' }}
     >
-      <img
-        src={item.src}
-        alt={item.caption}
-        loading="lazy"
-        className="h-full w-full object-cover"
-        style={{ filter: 'saturate(0.85) sepia(0.12) contrast(1.03)' }} /* filtro coeso "álbum" */
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      <span className="absolute bottom-3 left-4 translate-y-2 font-serif text-lg text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+      <div className="aspect-square w-full overflow-hidden bg-black/10">
+        <img
+          src={item.src}
+          alt={item.caption}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          style={{ filter: FILTER }}
+        />
+      </div>
+      <span className="absolute bottom-2.5 left-0 w-full px-2 text-center font-serif text-sm italic text-[#4a3b28]">
         {item.caption}
       </span>
     </motion.button>
   )
 }
 
-// Lightbox com transição fluida (layoutId) + navegação setas/swipe.
+// ------- Lightbox (swipe / setas / ESC) -------
 function Lightbox({ index, onClose, onNav }) {
   const item = gallery[index]
   const touch = useRef(null)
-
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') onClose()
@@ -91,8 +78,6 @@ function Lightbox({ index, onClose, onNav }) {
           {item.caption}
         </figcaption>
       </motion.figure>
-
-      {/* controles */}
       <button onClick={(e) => { e.stopPropagation(); onNav(-1) }} className="absolute left-4 text-3xl text-white/70 hover:text-white md:left-10">‹</button>
       <button onClick={(e) => { e.stopPropagation(); onNav(1) }} className="absolute right-4 text-3xl text-white/70 hover:text-white md:right-10">›</button>
       <button onClick={onClose} className="absolute right-5 top-5 text-xl text-white/70 hover:text-white">✕</button>
@@ -105,12 +90,12 @@ export default function Gallery() {
   const nav = useCallback((dir) => setOpen((i) => (i + dir + gallery.length) % gallery.length), [])
 
   return (
-    <section id="gallery" className="mx-auto max-w-6xl px-6 py-28 md:py-40">
+    <section id="gallery" className="mx-auto max-w-5xl px-6 py-28 md:py-40">
       <SectionTitle sup="momentos" title="Nossa galeria viva" />
 
-      <div className="mt-16 grid auto-rows-[180px] grid-cols-2 gap-3 sm:auto-rows-[220px] md:grid-cols-4">
+      <div className="mt-16 flex flex-wrap items-center justify-center gap-5 sm:gap-7">
         {gallery.map((item, i) => (
-          <Photo key={i} item={item} index={i} onOpen={setOpen} />
+          <Polaroid key={i} item={item} index={i} onOpen={setOpen} />
         ))}
       </div>
 

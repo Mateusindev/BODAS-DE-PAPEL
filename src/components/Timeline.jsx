@@ -14,10 +14,10 @@ function Milestone({ item, i }) {
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}
       style={{ perspective: 800 }}
-      className={`relative flex w-full items-center gap-6 ${left ? 'md:flex-row' : 'md:flex-row-reverse'} flex-row`}
+      className={`relative flex w-full flex-col items-center gap-6 ${left ? 'md:flex-row' : 'md:flex-row-reverse'}`}
     >
       {/* card */}
-      <div className={`panel flex-1 rounded-2xl p-6 md:p-8 ${left ? 'md:text-right' : 'md:text-left'} text-left`}>
+      <div className={`panel w-full rounded-2xl p-6 text-center md:flex-1 md:p-8 ${left ? 'md:text-right' : 'md:text-left'}`}>
         <span className="text-xs uppercase tracking-[0.3em]" style={{ color: 'var(--accent)' }}>
           {item.date}
         </span>
