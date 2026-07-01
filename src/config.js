@@ -11,13 +11,13 @@ export const couple = {
 
   // Data e hora EXATAS do casamento (ISO). Usado no contador em tempo real.
   // Formato: 'AAAA-MM-DDTHH:MM:SS'  (24h, horário local)
-  weddingDate: '2025-07-01T18:00:00',
+  weddingDate: '2025-07-04T18:00:00',
 
   // Frase curta sob os nomes no Hero
-  tagline: '1 ano juntos',
+  tagline: 'Bodas de papel',
 
   // Como a data aparece escrita (livre)
-  weddingDateLabel: '01 de julho de 2025',
+  weddingDateLabel: '04 de julho de 2025',
 }
 
 // ------------------------------------------------------------
