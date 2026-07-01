@@ -1,0 +1,84 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   Tema NOTURNO ESTRELADO — tokens de cor + tipografia
+   Toggle dia/noite troca as variáveis via [data-mode].
+   ============================================================ */
+@theme {
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --color-night: #0a0a1f;
+  --color-night-2: #12122e;
+  --color-midnight: #1a1a3e;
+  --color-gold: #d4af6a;
+  --color-gold-soft: #e8d4a0;
+  --color-plum: #4a2d5e;
+  --color-ivory: #f5f0e6;
+}
+
+:root {
+  --bg-top: #0a0a1f;
+  --bg-bottom: #050510;
+  --ink: #f5f0e6;
+  --ink-soft: #b8b3c9;
+  --accent: #d4af6a;
+  --accent-2: #7b5ea7;
+  --panel: rgba(255, 255, 255, 0.04);
+  --panel-border: rgba(212, 175, 106, 0.18);
+  color-scheme: dark;
+}
+
+/* Modo DIA (ensolarado) — o toggle escreve data-mode="day" no <html> */
+[data-mode='day'] {
+  --bg-top: #f6ede0;
+  --bg-bottom: #ecdcc4;
+  --ink: #3a2b1a;
+  --ink-soft: #7a6a52;
+  --accent: #c47a3d;
+  --accent-2: #d9a25a;
+  --panel: rgba(255, 255, 255, 0.5);
+  --panel-border: rgba(196, 122, 61, 0.25);
+  color-scheme: light;
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-bottom);
+  color: var(--ink);
+  overflow-x: hidden;
+  transition: background 1.2s ease, color 1.2s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+/* util p/ textos-vidro das seções */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(12px);
+}
+
+/* barra de scroll discreta */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
