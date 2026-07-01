@@ -10,6 +10,7 @@ import Countdown from './components/Countdown'
 import MusicPlayer from './components/MusicPlayer'
 import ThemeToggle from './components/ThemeToggle'
 import Closing from './components/Closing'
+import Divider from './components/Divider'
 
 export default function App() {
   useLenis()
@@ -29,10 +30,15 @@ export default function App() {
 
         <main>
           <Hero3D key={heroKey} />
+          <Divider />
           <Timeline />
+          <Divider />
           <Gallery />
+          <Divider />
           <LetterEnvelope />
+          <Divider />
           <Countdown />
+          <Divider />
           {/* Seção 6 (constelação 3D) e trilha completa entram na próxima etapa */}
           <Closing onReplay={replay} />
         </main>
