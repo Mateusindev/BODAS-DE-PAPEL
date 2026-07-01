@@ -11,6 +11,8 @@ import MusicPlayer from './components/MusicPlayer'
 import ThemeToggle from './components/ThemeToggle'
 import Closing from './components/Closing'
 import Divider from './components/Divider'
+import Ambience from './components/Ambience'
+import { ScrollProgress, CursorGlow } from './components/Flourishes'
 
 export default function App() {
   useLenis()
@@ -24,11 +26,14 @@ export default function App() {
 
   return (
     <ThemeProvider>
+      <ScrollProgress />
+      <Ambience />
+      <CursorGlow />
       <Suspense fallback={<Loader />}>
         <ThemeToggle />
         <MusicPlayer />
 
-        <main>
+        <main className="relative z-10">
           <Hero3D key={heroKey} />
           <Divider />
           <Timeline />

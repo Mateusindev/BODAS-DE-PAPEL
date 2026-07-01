@@ -76,7 +76,17 @@ export function SectionTitle({ sup, title }) {
       transition={{ duration: 0.8 }}
       className="text-center"
     >
-      <p className="text-xs uppercase tracking-[0.5em]" style={{ color: 'var(--accent)' }}>
+      <p
+        className="text-xs uppercase tracking-[0.5em]"
+        style={{
+          background: 'linear-gradient(90deg, var(--accent) 30%, var(--gold-soft, #e8d4a0) 50%, var(--accent) 70%)',
+          backgroundSize: '200% auto',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          animation: 'shimmer 6s linear infinite',
+        }}
+      >
         {sup}
       </p>
       <h2 className="mt-3 font-serif text-4xl md:text-5xl" style={{ color: 'var(--ink)' }}>
